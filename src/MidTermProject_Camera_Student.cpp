@@ -125,7 +125,16 @@ int main(int argc, const char *argv[])
         cv::Rect vehicleRect(535, 180, 180, 150);
         if (bFocusOnVehicle)
         {
-            // ...
+            auto kpt = keypoints.begin();
+            while (kpt < keypoints.end()){
+                if (vehicleRect.contains(kpt->pt)){
+                    kpt++;
+                }
+                else
+                {
+                    keypoints.erase(kpt);
+                }
+            }
         }
 
         //// EOF STUDENT ASSIGNMENT
