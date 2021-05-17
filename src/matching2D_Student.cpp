@@ -210,7 +210,22 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
     }
     else if(detectorType.compare("ORB") == 0)
     {
-        //...
+        cv::Ptr<cv::FeatureDetector> detector = cv::ORB::create();
+
+        double t = (double)cv::getTickCount();
+        detector->detect(img, keypoints);
+        t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+        cout << "ORB detector with n= " << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
+        
+        if (bVis)
+        {
+            cv::Mat visImage = img.clone();
+            cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+            string windowName = "ORB Results";
+            cv::namedWindow(windowName, 6);
+            imshow(windowName, visImage);
+            cv::waitKey(0);
+        }
     }
     else if(detectorType.compare("AKAZE") == 0)
     {
