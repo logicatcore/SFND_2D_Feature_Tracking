@@ -41,3 +41,76 @@ Then, add *C:\vcpkg\installed\x64-windows\bin* and *C:\vcpkg\installed\x64-windo
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./2D_feature_tracking`.
+
+## Rubric points addressed
+1. MP.1 - A ring buffer of size 2 has been implemented using standard library Queue
+2. MP.2 - The various detectors are implemented which can be chosen by the string detectorType
+3. MP.3 - All the keypoints outside the pre-defined rectangle have been removed using OpenCV's Rect.contains function
+4. MP.4 - The various descriptors are implemented which can be chosen by the string descriptorType
+5. MP.5 - FLANN and KNN matching have been implemented
+6. MP.6 - Descriptor distance ratio has been implemented
+7. MP.7 - 
+### Descending order of average detected keypoints on the preceding vehicle 
+||||||||
+|-------|-------|-------|-------|-----------|------|--------|
+| BRISK | AKAZE | SIFT  | ORB   | SHITOMASI | FAST | HARRIS |
+| 276.2 | 167   | 138.6 | 116.1 | 117.9     | 94.9 | 24.8   |
+
+### Remarks on detectors
+* Brisk - Densly clouded points, mainly at top half of the vehicle, consistent
+
+* AKAZE - Keypoints are spread out along the contour of the preceding vehicle and are consisten
+
+* SIFT  - Taillights are recognised consistently but overall the keypoints do not seem very consisten
+
+* ORB   - Consistent but sparse and big neighbourhoods considered for every keypoint
+
+* SHITOMASI   - Spread out, consistent and small neighbourhoods considered for every keypoint
+
+* FAST   - Keypoints are sparse, spread along the contour of the preceding vehicle and the neighbourhoods are approx 10x10 pixels
+
+* HARRIS   - Very sparse keypoints (could be because of corner response threshold) but are consitent and neighborhoods similiar to FAST detector
+
+8. MP.8 - 
+### Good Features to Track (Shitomasi)
+| BRISK | BRIEF | ORB | FREAK | AKAZE | SIFT |
+|-------|-------|-----|-------|-------|------|
+| 118   | 118   | 118 | 118   | -     | 118  |
+### HARRIS
+| BRISK | BRIEF | ORB | FREAK | AKAZE | SIFT |
+|-------|-------|-----|-------|-------|------|
+| 23    | 23    | 23  | 23    | -     | 23   |
+### FAST
+| BRISK | BRIEF | ORB | FREAK | AKAZE | SIFT |
+|-------|-------|-----|-------|-------|------|
+| 95    | 95    | 95  | 95    | -     | 95   |
+### BRISK
+| BRISK | BRIEF | ORB | FREAK | AKAZE | SIFT |
+|-------|-------|-----|-------|-------|------|
+| 278   | 278   | 278 | 278   | -     | 278  |
+### ORB
+| BRISK | BRIEF | ORB | FREAK | AKAZE | SIFT |
+|-------|-------|-----|-------|-------|------|
+| 105   | 114   | 114 | 61    | -     | 114  |
+### AKAZE
+| BRISK | BRIEF | ORB | FREAK | AKAZE | SIFT |
+|-------|-------|-----|-------|-------|------|
+| 165   | 165   | 165 | 165   | 165   | 165  |
+### SIFT
+| BRISK | BRIEF | ORB | FREAK | AKAZE | SIFT |
+|-------|-------|-----|-------|-------|------|
+| 138   | 138   | -   | 137   | -     | 138  |
+9. MP.9 - 
+### Descriptors arranged based on fastness (in ms)
+| BRIEF             | BRISK             | ORB               | SIFT              | FREAK             | AKAZE      |
+|-------------------|-------------------|-------------------|-------------------|-------------------|------------|
+| 0.773459757143    | 2.112561857143    | 7.854222833333    | 28.368754285714   | 31.722652857143   | 46.60965   |
+
+---
+
+## Suggested Top-3 detector-descriptor combinations for real time applications are
+1. FAST + BRIEF or BRISK
+2. ORB + BRIEF or BRISK
+3. SHITOMASI + BRIEF or BRISK
+
+
