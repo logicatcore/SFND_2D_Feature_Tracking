@@ -107,7 +107,7 @@ double descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &des
     }
     else if (descriptorType.compare("SIFT") == 0)
     {
-        extractor = cv::SiftDescriptorExtractor::create();
+        extractor = cv::xfeatures2d::SiftDescriptorExtractor::create();
     }
     else
     {
@@ -329,7 +329,7 @@ double detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, st
 		double edgeThreshold = 10;
 		double sigma = 1.6;
 
-        cv::Ptr<cv::FeatureDetector> detector = cv::SIFT::create(nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma);
+        cv::Ptr<cv::FeatureDetector> detector = cv::xfeatures2d::SIFT::create(nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma);
 
         t = (double)cv::getTickCount();
         detector->detect(img, keypoints);
